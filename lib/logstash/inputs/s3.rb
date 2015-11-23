@@ -92,11 +92,13 @@ class LogStash::Inputs::S3 < LogStash::Inputs::Base
       end
     end
 
-    unless @backup_to_dir.nil?
-      Dir.mkdir(@backup_to_dir, 0700) unless File.exists?(@backup_to_dir)
-    end
+    unless Process.euid == 0
+      unless @backup_to_dir.nil?
+        Dir.mkdir(@backup_to_dir, 0700) unless File.exists?(@backup_to_dir)
+      end
 
-    FileUtils.mkdir_p(@temporary_directory) unless Dir.exist?(@temporary_directory)
+      FileUtils.mkdir_p(@temporary_directory) unless Dir.exist?(@temporary_directory)
+    end
   end # def register
 
   public
