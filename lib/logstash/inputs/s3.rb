@@ -67,6 +67,10 @@ class LogStash::Inputs::S3 < LogStash::Inputs::Base
   # default to the current OS temporary directory in linux /tmp/logstash
   config :temporary_directory, :validate => :string, :default => "/var/lib/logstash/S3_input_temp"
 
+  # Set the username that will be used for server starting#
+  # https://github.com/vitvegl/elk-deploy/blob/qg/SOURCES/logstash.service
+  config :temporary_directory_owner, :validate => :string, :default => "logstash"
+
   public
   def register
     require "fileutils"
